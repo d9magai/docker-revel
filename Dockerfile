@@ -13,13 +13,13 @@ RUN yum update -y && yum install -y \
 
 RUN curl -sL $GO_ARCHIVE_URL | tar xz -C /usr/local \
     && ls -dF /usr/local/go/* | egrep -v 'bin|lib|pkg|src' | xargs rm -r
-ENV GOPATH /opt/go
+ENV HOME /srv
+ENV GOPATH ${HOME}/go
 ENV PATH ${PATH}:${GOPATH}/bin:/usr/local/go/bin:/opt/rh/git19/root/usr/bin
-WORKDIR ${HOME}
 
 RUN go get github.com/revel/revel
 RUN go get github.com/revel/cmd/revel
 
 EXPOSE 9000
-WORKDIR /srv
+WORKDIR ${HOME}
 
